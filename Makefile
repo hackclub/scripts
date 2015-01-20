@@ -1,4 +1,4 @@
-SCRIPTS=tarsnap-backup
+SCRIPTS=tarsnap-backup generate-shipped
 
 .PHONY: cp
 

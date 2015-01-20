@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Usage: ./generate-shipped dest
+#
+# Example: ./generate-shipped /var/www/shipped.hackedu.us/
+
+run() {
+  echo \\n  \$ $*\\n
+  $*
+}
+
+repo_url='https://github.com/hackedu/shipped'
+tmp_dir="/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)"
+
+run git clone $repo_url $tmp_dir
+run cd $tmp_dir
+
+run jekyll build
+
+run rsync -avh --delete ./_site/ $1
+
+run rm -rf $tmp_dir
